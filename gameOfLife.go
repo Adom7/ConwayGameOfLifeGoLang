@@ -15,8 +15,14 @@ const (
 	cellSize     = 10
 )
 
+const (
+	buttonWidth  = 100
+	buttonHeight = 50
+)
+
 type Game struct {
-	grid [][]bool
+	grid      [][]bool
+	isStarted bool
 }
 
 func (g *Game) Update() error {
@@ -56,6 +62,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	for j := 1; j < gridSize; j++ {
 		ebitenutil.DrawLine(screen, 0, float64(j*cellSize), float64(screenWidth), float64(j*cellSize), color.Gray16{0x3333})
 	}
+
+	buttonX := (screenWidth - buttonWidth) / 2
+	buttonY := screenHeight - buttonHeight - 20
+	ebitenutil.DrawRect(screen, float64(buttonX), float64(buttonY), buttonWidth, buttonHeight, color.RGBA{187, 187, 187, 255})
+	ebitenutil.DebugPrintAt(screen, "Start Game", buttonX, buttonY)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
